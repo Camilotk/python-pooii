@@ -1,2 +1,2 @@
 TODO:
-[*] Fazer o diagrama UML
+- Fazer o diagrama UML
