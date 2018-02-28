@@ -7,7 +7,7 @@ Cria uma tabela com 6 cores
 # Guarda as cores da tabela
 cols = ['#0000ff','#0000aa','#000088','#000055','#000033', '#000011']
 
-# Define as alturas
+# Define as dimensões
 w = 700
 h = 500
 y = h/6
