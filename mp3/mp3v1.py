@@ -1,7 +1,7 @@
 #!/home/cazevedo/.pypy/bin/pypy3
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018 Camilo Cunha <Camilotk@gmail.com>
+# Copyright (C) 2018 Camilo Cunha <Camilotk@gmail.com> e Renan <:email>
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
