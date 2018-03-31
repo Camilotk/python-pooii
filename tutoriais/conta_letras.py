@@ -13,6 +13,12 @@
 
 # Saída: A letra mais frequente em letra minúscula no formato de string.
 
+# Como é utilizado: Para a maioria das tarefas de decriptografia, você precisa
+# saber a frequência de ocorrência de várias letras em uma seção de texto. 
+# Por exemplo: podemos facilmente quebrar um algoritmo de criptografia simples
+# de adição ou substituição se soubermos a frequência em que as letras aparecem.
+# Também pode ser informação útil para linguistas!
+
 def procura_letra(texto):
     texto = texto.lower()
     letras = []
