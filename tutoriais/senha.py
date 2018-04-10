@@ -44,3 +44,33 @@ def verifica():
     return False
 
 print (verifica())
+
+# ---------------------------------------------------
+#                   versão 2
+# ---------------------------------------------------
+def pass_check(pass_):
+    """
+    Retorna True se a senha for forte ou False caso contrário.
+
+    Uma senha forte necessita de no mínimo 10 dígitos, um número, uma letra
+    minúscula e uma letra mauiúscula.
+    """
+    # length is greater than or equal to 10 symbols
+    greater = len(pass_) > 10
+    has_upper = False
+    has_lower = False
+    has_num = False
+    for s in pass_:
+        if (s.isnumeric()):
+            has_num = True
+        elif(s.islower()):
+            has_lower = True
+        elif(s.isupper()):
+            has_upper = True
+        else:
+            continue
+    if has_upper and has_lower and has_num and greater:
+        return True
+    return False
+
+
