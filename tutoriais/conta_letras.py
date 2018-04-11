@@ -34,3 +34,22 @@ def procura_letra(texto):
     return retorno[0]
     
 print(procura_letra("How do you do?"))
+
+# ------------------------------------------------------
+#                   VERSÃO 2
+# ------------------------------------------------------
+
+def procura_letraS(texto):
+    texto = texto.lower()
+    chars = []
+    maior = [0, 'a']
+    for letra in texto:
+      if texto.count(letra) > maior[0] and letra.isalpha():
+        maior[0] = texto.count(letra)
+        maior[1] = letra
+      elif texto.count(letra) == maior[0] and letra.isalpha():
+        if maior[1] > letra:
+          maior[1] = letra
+      else:
+        pass
+    return maior[1]
