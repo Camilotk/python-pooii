@@ -10,3 +10,9 @@
 # tarefas mais complexas. O conceito pode ser facilmente generalizado para problemas do mundo real. Por exemplo: se você 
 # precisa limpar estatísticas removendo elementos de baixa frequência (ruído)
 
+def limpaRuido (args):
+    r = []
+    for arg in args:
+        if args.count(arg) >= 2:
+            r.append(arg)
+    return r
