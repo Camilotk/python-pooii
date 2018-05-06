@@ -32,50 +32,50 @@ from tkinter import *
 
 musicas = []
 
-class Reprodutor:
+class Reprodutor(object):
     def __init__(self):
         pass
 
-    def reproduz():
+    def reproduz(self):
         mixer.init()
         for item in musicas:
             musica_atual = mixer.music.load(item)
             musica_atual = mixer.music.play()
 
-    def pausa():
+    def pausa(self):
         musica_atual = mixer.music.pause()
 
-    def para():
+    def para(self):
         musica_atual = mixer.music.stop()
 
-    def retoma():
+    def retoma(self):
         musica_atual = mixer.music.unpause()
     
-    def nova():
+    def nova(self):
         selecionar = askopenfilename(initialdir="\\usr",
                            filetypes =(("Arquivo de audio", "*.mp3"),("All Files","*.*")),
                            title = "Selecione as musicas")
         musicas.append(selecionar)
         
-    def grava():
+    def grava(self):
         arquivo = open("bilbioteca.txt", "w", encoding="UTF-8")
         for e in agenda:
             arquivo.write("%s" % musica[0])
         arquivo.close()
 
-    def proxima():
+    def proxima(self):
         for item in range(len(musicas)):
             item += 1
             musica_atual = mixer.music.load(musicas[item])  
             musica_atual = mixer.music.play()
 
-    def anterior():
+    def anterior(self):
         for item in range(len(musicas)):
             item -= 1 
             musica_atual = mixer.music.load(musicas[item])
             musica_atual = mixer.music.play()
         
-    def menu():
+    def menu(self):
         janela = Tk()
         janela.title("PYTHON Reprodutor")
 
@@ -98,4 +98,5 @@ class Reprodutor:
         janela.geometry("410x80+450+350")
         janela.mainloop()
         
-Reprodutor.menu()
+player = Reprodutor()
+player.menu()
