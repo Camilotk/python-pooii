@@ -1,4 +1,3 @@
-from struct import *
 import re
 
 def limpa_bits(b):
@@ -22,9 +21,8 @@ def separa_titulo(t):
     regex = re.compile('(?!^)(?=[A-Z])', re.MULTILINE)
     resultado = re.sub(regex, " ", t)
     return resultado
-            
-        
-with open("/home/cazevedo/Modelos/github/python-pooii/mp3/arquivos/musicas/Omonoko_-_Empty_Streets.mp3", "rb") as binary_file:
+
+with open("/arquivos/musicas/Omonoko_-_Empty_Streets.mp3", "rb") as binary_file:
     # Read the whole file at once
     data = binary_file.read()
     _a = str(data[-128:])
