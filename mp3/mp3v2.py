@@ -31,6 +31,7 @@ from tkinter.filedialog import askopenfilename
 from tkinter import *
 
 musicas = []
+i = 0
 
 class Reprodutor(object):
     def __init__(self):
@@ -38,16 +39,18 @@ class Reprodutor(object):
         Constructor method
         """
         pass
-
-    def reproduz(self):
+    
+    def reproduz(self, i=0):
         """
         Initialize the player and plays all music
         in saved paths of array musicas
         """
         mixer.init()
         for item in musicas:
-            musica_atual = mixer.music.load(item)
-            musica_atual = mixer.music.play()
+            mixer.music.load(item)
+            mixer.music.play()
+            i += 1
+            print(i)
 
     def pausa(self):
         musica_atual = mixer.music.pause()
@@ -71,47 +74,70 @@ class Reprodutor(object):
         
     def grava(self):
         arquivo = open("bilbioteca.txt", "w", encoding="UTF-8")
-        for e in agenda:
-            arquivo.write("%s" % musica[0])
+        for e in musicas:
+            arquivo.write("%s \n" % e)
         arquivo.close()
 
     def proxima(self):
-        for item in range(len(musicas)):
-            item += 1
-            musica_atual = mixer.music.load(musicas[item])  
-            musica_atual = mixer.music.play()
+        Reprodutor.para(self)
+        musica_atual = mixer.music.load(musicas[i])
+        musica_atual = mixer.music.play()
 
     def anterior(self):
         for item in range(len(musicas)):
             item -= 1 
             musica_atual = mixer.music.load(musicas[item])
             musica_atual = mixer.music.play()
-        
-    def menu(self):
-        """
-        Creates the GUI
-        """
-        janela = Tk()
-        janela.title("PYTHON Reprodutor")
+            
+    def valida_faixa_inteiro(pergunta, inicio, fim):
+     while True:
+         try:
+               valor = int(input(pergunta))
+               if inicio <= valor <= fim:
+                   return(valor)
+         except ValueError:
+               print("Valor inválido, favor digitar entre %d e %d" % (inicio, fim))
+               
 
-        bt_escolher = Button(janela, width=20, text="ADICIONAR MUSICAS", command=Reprodutor.nova)
-        bt_proxima  = Button(janela, width=10, text="PROXIMA", command=Reprodutor.proxima)
-        bt_anterior = Button(janela, width=10, text="ANTERIOR", command=Reprodutor.anterior)
-        bt_play    = Button(janela, width=10, text="PLAY", command=Reprodutor.reproduz)
-        bt_pause   = Button(janela, width=10, text="PAUSAR", command=Reprodutor.pausa)
-        bt_stop    = Button(janela, width=10, text="PARAR", command=Reprodutor.para)
-        bt_return  = Button(janela, width=10, text="RETOMAR", command=Reprodutor.retoma)
-        
-        bt_escolher.place (x=10,  y=50 )
-        bt_proxima.place  (x=170, y=50)
-        bt_anterior.place (x=270, y=50)
-        bt_play.place   (x=10,  y=0)
-        bt_pause.place  (x=110, y=0)
-        bt_stop.place   (x=210, y=0)
-        bt_return.place (x=310, y=0)
-        
-        janela.geometry("410x80+450+350")
-        janela.mainloop()
+    def imprime_menu():
+        print("""
+   1 - Adicionar Músicas
+   2 - Play
+   3 - Pausar
+   4 - Parar
+   5 - Retomar
+   6 - Próxima
+   7 - Anterior
+   8 - Salvar a Playlist
+   9 - Le a Playlist
+
+   0 - Sai
+    """)
+        return Reprodutor.valida_faixa_inteiro("Escolha uma opção: ",0,9)
+    
+    def menu(self):
+        while True:
+         opção = Reprodutor.imprime_menu()
+         if opção == 0:
+             break
+         elif opção == 1:
+             Reprodutor.nova(self)
+         elif opção == 2:
+             Reprodutor.reproduz(self)
+         elif opção == 3:
+             Reprodutor.pausa(self)
+         elif opção == 4:
+             Reprodutor.para(self)
+         elif opção == 5:
+             Reprodutor.retoma(self)
+         elif opção == 6:
+             Reprodutor.proxima(self)
+         elif opção == 7:
+             Reprodutor.anterior(self)
+         elif opção == 8:
+             Reprodutor.grava(self)
+         elif opção == 9:
+             lê()
         
 #intancia a Classe Reprodutor
 player = Reprodutor()

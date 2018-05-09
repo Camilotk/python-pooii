@@ -1,7 +1,14 @@
-from struct import *
 import re
 
+"""
+Um leitor simples para a leitura de metadados MP3
+"""
+
 def limpa_bits(b):
+    """
+    Recebe uma variavel em bits e retorna
+    em String sem o lixo da leitura
+    """
     limpo = []
     for a in b:
         if a.isalpha():
@@ -9,6 +16,10 @@ def limpa_bits(b):
     return ''.join(limpo)
 
 def limpa_string(s):
+    """
+    Recebe uma String e retira as repetições de x 
+    ocasionadas pela leitura de bits
+    """
     limpo = []
     ant = ''
     for l in s:
@@ -19,13 +30,22 @@ def limpa_string(s):
     return ''.join(limpo)
 
 def separa_titulo(t):
+    """
+    Recebe uma String e adiciona um espaço entre o Camel Case
+    """
     regex = re.compile('(?!^)(?=[A-Z])', re.MULTILINE)
     resultado = re.sub(regex, " ", t)
     return resultado
-            
-        
-with open("/home/cazevedo/Modelos/github/python-pooii/mp3/arquivos/musicas/Omonoko_-_Empty_Streets.mp3", "rb") as binary_file:
-    # Read the whole file at once
+
+with open("/arquivos/musicas/Omonoko_-_Empty_Streets.mp3", "rb") as binary_file:
+    """
+    Le o arquivo em binario e retorna os metadados.
+
+    variaveis:
+    _a = bits lidos
+    resto = bits limpos
+    _i = informacoes lidas
+    """
     data = binary_file.read()
     _a = str(data[-128:])
     _a = limpa_bits(_a)
