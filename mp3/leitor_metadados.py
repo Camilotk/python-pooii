@@ -38,6 +38,7 @@ def separa_titulo(t):
     return resultado
 
 with open("/arquivos/musicas/Omonoko_-_Empty_Streets.mp3", "rb") as binary_file:
+<<<<<<< HEAD
     """
     Le o arquivo em binario e retorna os metadados.
 
@@ -46,6 +47,9 @@ with open("/arquivos/musicas/Omonoko_-_Empty_Streets.mp3", "rb") as binary_file:
     resto = bits limpos
     _i = informacoes lidas
     """
+=======
+    # Read the whole file at once
+>>>>>>> a688185bb4ed69bf19282b1e98b28441973f9e96
     data = binary_file.read()
     _a = str(data[-128:])
     _a = limpa_bits(_a)
