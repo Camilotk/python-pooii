@@ -1,2 +1,0 @@
-/home/cazevedo/Modelos/github/python-pooii/mp3/arquivos/musicas/Melanie_Ungar_-_Crazy_Glue.mp3 + 
-/home/cazevedo/Modelos/github/python-pooii/mp3/arquivos/musicas/Wordsmith_-_Fill_the_Space.mp3 + 

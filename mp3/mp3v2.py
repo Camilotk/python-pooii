@@ -29,28 +29,96 @@ A simple mp3 player
 from pygame  import mixer 
 from tkinter.filedialog import askopenfilename
 from tkinter import *
+import re
+import os
 
 musicas = []
+caminhos = []
 i = 0
+class Musica(object):
+    def __init__(self):
+        self.nome = "Desconhecido"
+        self.artista = "Desconhecido"
+        self.album = "Desconhecido"
+        self.caminho = ""
 
+    def limpa_bits(self, b):
+        """
+        Recebe uma variavel em bits e retorna
+        em String sem o lixo da leitura
+        """
+        limpo = []
+        for a in b:
+            if a.isalpha():
+                limpo.append(a)
+        return ''.join(limpo)
+        
+    def limpa_string(self, s):
+        """
+        Recebe uma String e retira as repetições de x 
+        ocasionadas pela leitura de bits
+        """
+        limpo = []
+        ant = ''
+        for l in s:
+            if l == 'x' and ant == 'x':
+                continue
+            ant = l
+            limpo.append(l)
+        return ''.join(limpo)
+
+    def separa_titulo(self, t):
+        """
+        Recebe uma String e adiciona um espaço entre o Camel Case
+        """
+        regex = re.compile('(?!^)(?=[A-Z])', re.MULTILINE)
+        resultado = re.sub(regex, " ", t)
+        return resultado
+
+    def imprime_metadados(self):
+        print("Nome: %s" % Musica.nome)
+        print("Artista: %s" % Musica.artista)
+        print("Album: %s" % Musica.album)
+
+    def cria_musica(self, caminho):
+        with open(caminho, "rb") as binary_file:
+            """
+            Le o arquivo em binario e retorna os metadados.
+
+            variaveis:
+            _a = bits lidos
+            resto = bits limpos
+        _   i = informacoes lidas
+            """
+            self.caminho = caminho
+            # Read the whole file at once
+            data = binary_file.read()
+            _a = str(data[-128:])
+            _a = Musica.limpa_bits(self, _a)
+            resto = Musica.limpa_string(self, _a[4:])
+            _i = []
+            _i = resto.split('x')
+            self.nome = Musica.separa_titulo(self, _i[0])
+            self.artista = Musica.separa_titulo(self, _i[1])
+            self.album = Musica.separa_titulo(self, _i[2])
+        
+        
 class Reprodutor(object):
     def __init__(self):
         """
         Constructor method
         """
-        pass
+        mixer.init()
     
     def reproduz(self, i=0):
         """
         Initialize the player and plays all music
         in saved paths of array musicas
         """
-        mixer.init()
         for item in musicas:
-            mixer.music.load(item)
+            mixer.music.load(item.caminho)
             mixer.music.play()
             i += 1
-            print(i)
 
     def pausa(self):
         musica_atual = mixer.music.pause()
@@ -70,17 +138,50 @@ class Reprodutor(object):
         selecionar = askopenfilename(initialdir="\\usr",
                            filetypes =(("Arquivo de audio", "*.mp3"),("All Files","*.*")),
                            title = "Selecione as musicas")
-        musicas.append(selecionar)
+        musica = Musica()
+        musica.cria_musica(selecionar)
+        musicas.append(musica)
         
-    def grava(self):
-        arquivo = open("bilbioteca.txt", "w", encoding="UTF-8")
+    def grava(self, nome="biblioteca.txt"):
+        arquivo = open(nome, "w", encoding="UTF-8")
         for e in musicas:
-            arquivo.write("%s \n" % e)
+            arquivo.write("%s" % e.caminho)
+            arquivo.write('\n')
         arquivo.close()
+
+    def le(self):
+        path = askopenfilename(initialdir="\\usr",
+                           filetypes =(("Arquivos de Texto", "*.txt"),("All Files","*.*")),
+                           title = "Carregar a Playlist")
+        
+        arquivo = open (path, "r", encoding="UTF-8")
+        for l in arquivo.readlines():
+            musicaS = Musica()
+            musicaS.cria_musica(l[0:-1])
+            musicas.append(musicaS)
+        arquivo.close()
+
+    def pesquisa(self):
+        chave = input("Pesquisar por : ")
+        encontrados = []
+        play = False
+        for p,e in enumerate(musicas):
+            if chave in e.nome:
+                play = True
+                encontrados.append(e)
+        if play:
+            for p,e in enumerate(encontrados):
+                print("Encontradas: ")
+                print(str(p) + " - " + e.nome)
+            chave = int(Reprodutor.valida_faixa_inteiro("Qual deseja tocar? [digite o n]", 0, len(encontrados)))
+            mixer.music.load(encontrados[chave].caminho)
+            mixer.music.play()
+        else:
+            print("Música não encontrada")
 
     def proxima(self):
         Reprodutor.para(self)
-        musica_atual = mixer.music.load(musicas[i])
+        musica_atual = mixer.music.load(musicas)
         musica_atual = mixer.music.play()
 
     def anterior(self):
@@ -110,10 +211,11 @@ class Reprodutor(object):
    7 - Anterior
    8 - Salvar a Playlist
    9 - Le a Playlist
+   10 - Pesquisa
 
    0 - Sai
     """)
-        return Reprodutor.valida_faixa_inteiro("Escolha uma opção: ",0,9)
+        return Reprodutor.valida_faixa_inteiro("Escolha uma opção: ",0,10)
     
     def menu(self):
         while True:
@@ -137,7 +239,9 @@ class Reprodutor(object):
          elif opção == 8:
              Reprodutor.grava(self)
          elif opção == 9:
-             lê()
+             Reprodutor.le(self)
+         elif opção == 10:
+             Reprodutor.pesquisa(self)
         
 #intancia a Classe Reprodutor
 player = Reprodutor()
