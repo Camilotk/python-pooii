@@ -37,6 +37,14 @@ caminhos = []
 i = 0
 class Musica(object):
     def __init__(self):
+        """
+        Initialize the class with the necessary values about a song
+        Variables:
+        nome = name of the song
+        artista = name of artist
+        album = name of the album
+        caminho = path where the mp3 is alocated
+        """
         self.nome = "Desconhecido"
         self.artista = "Desconhecido"
         self.album = "Desconhecido"
@@ -44,8 +52,8 @@ class Musica(object):
 
     def limpa_bits(self, b):
         """
-        Recebe uma variavel em bits e retorna
-        em String sem o lixo da leitura
+        Recieves one variable in bits and returns
+        in one String without the reading garbage
         """
         limpo = []
         for a in b:
@@ -55,8 +63,8 @@ class Musica(object):
         
     def limpa_string(self, s):
         """
-        Recebe uma String e retira as repetições de x 
-        ocasionadas pela leitura de bits
+        Recives one String and removes all repeted \'x\'
+        that are stored because the bits reading
         """
         limpo = []
         ant = ''
@@ -69,13 +77,16 @@ class Musica(object):
 
     def separa_titulo(self, t):
         """
-        Recebe uma String e adiciona um espaço entre o Camel Case
+        Recieves one String and alocates one blank space between the Camel Case
         """
         regex = re.compile('(?!^)(?=[A-Z])', re.MULTILINE)
         resultado = re.sub(regex, " ", t)
         return resultado
 
     def imprime_metadados(self):
+        """
+        Prints songs informations
+        """
         print("Nome: %s" % Musica.nome)
         print("Artista: %s" % Musica.artista)
         print("Album: %s" % Musica.album)
@@ -83,12 +94,12 @@ class Musica(object):
     def cria_musica(self, caminho):
         with open(caminho, "rb") as binary_file:
             """
-            Le o arquivo em binario e retorna os metadados.
+            Reads the file in binary data and returns it's metadata
 
-            variaveis:
-            _a = bits lidos
-            resto = bits limpos
-        _   i = informacoes lidas
+            variables:
+            _a = readed bits
+            resto = cleaned bits
+            _i = readed information
             """
             self.caminho = caminho
             # Read the whole file at once
@@ -121,12 +132,21 @@ class Reprodutor(object):
             i += 1
 
     def pausa(self):
+        """
+        Pauses the playing song
+        """
         musica_atual = mixer.music.pause()
 
     def para(self):
+        """
+        Stops the playing song
+        """
         musica_atual = mixer.music.stop()
 
     def retoma(self):
+        """
+        Returns the Stoped song where 
+        """
         musica_atual = mixer.music.unpause()
     
     def nova(self):
@@ -143,6 +163,9 @@ class Reprodutor(object):
         musicas.append(musica)
         
     def grava(self, nome="biblioteca.txt"):
+        """
+        Saves the playlist in the OS
+        """
         arquivo = open(nome, "w", encoding="UTF-8")
         for e in musicas:
             arquivo.write("%s" % e.caminho)
@@ -150,6 +173,9 @@ class Reprodutor(object):
         arquivo.close()
 
     def le(self):
+        """
+        Reads the file in OS and mounts the Playlist 
+        """
         path = askopenfilename(initialdir="\\usr",
                            filetypes =(("Arquivos de Texto", "*.txt"),("All Files","*.*")),
                            title = "Carregar a Playlist")
@@ -162,6 +188,9 @@ class Reprodutor(object):
         arquivo.close()
 
     def pesquisa(self):
+        """
+        Searchs for a song name and ask for play it
+        """
         chave = input("Pesquisar por : ")
         encontrados = []
         play = False
@@ -180,27 +209,39 @@ class Reprodutor(object):
             print("Música não encontrada")
 
     def proxima(self):
+        """
+        Plays the next song in vector
+        """
         Reprodutor.para(self)
         musica_atual = mixer.music.load(musicas)
         musica_atual = mixer.music.play()
 
     def anterior(self):
+        """
+        Plays the foward song
+        """
         for item in range(len(musicas)):
             item -= 1 
             musica_atual = mixer.music.load(musicas[item])
             musica_atual = mixer.music.play()
             
     def valida_faixa_inteiro(pergunta, inicio, fim):
-     while True:
-         try:
-               valor = int(input(pergunta))
-               if inicio <= valor <= fim:
-                   return(valor)
-         except ValueError:
-               print("Valor inválido, favor digitar entre %d e %d" % (inicio, fim))
+        """
+        Validates the entries in Program
+        """
+        while True:
+            try:
+                valor = int(input(pergunta))
+                if inicio <= valor <= fim:
+                    return(valor)
+            except ValueError:
+                print("Valor inválido, favor digitar entre %d e %d" % (inicio, fim))
                
 
     def imprime_menu():
+        """
+        Shows the options and asks for an entry
+        """
         print("""
    1 - Adicionar Músicas
    2 - Play
@@ -218,6 +259,9 @@ class Reprodutor(object):
         return Reprodutor.valida_faixa_inteiro("Escolha uma opção: ",0,10)
     
     def menu(self):
+        """
+        Executes the entries in loop until the User asks to exit
+        """
         while True:
          opção = Reprodutor.imprime_menu()
          if opção == 0:
