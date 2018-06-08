@@ -60,7 +60,7 @@ class Musica(object):
             if a.isalpha():
                 limpo.append(a)
         return ''.join(limpo)
-        
+
     def limpa_string(self, s):
         """
         Recives one String and removes all repeted \'x\'
@@ -112,15 +112,14 @@ class Musica(object):
             self.nome = Musica.separa_titulo(self, _i[0])
             self.artista = Musica.separa_titulo(self, _i[1])
             self.album = Musica.separa_titulo(self, _i[2])
-        
-        
+
 class Reprodutor(object):
     def __init__(self):
         """
         Constructor method
         """
         mixer.init()
-    
+
     def reproduz(self, i=0):
         """
         Initialize the player and plays all music
@@ -145,14 +144,14 @@ class Reprodutor(object):
 
     def retoma(self):
         """
-        Returns the Stoped song where 
+        Returns the Stoped song where
         """
         musica_atual = mixer.music.unpause()
-    
+
     def nova(self):
         """
         Use the GUI function to take the path of a file
-        and store in the variable selecionar, then 
+        and store in the variable selecionar, then
         store all paths in array musicas
         """
         selecionar = askopenfilename(initialdir="\\usr",
@@ -161,7 +160,7 @@ class Reprodutor(object):
         musica = Musica()
         musica.cria_musica(selecionar)
         musicas.append(musica)
-        
+
     def grava(self, nome="biblioteca.txt"):
         """
         Saves the playlist in the OS
@@ -174,12 +173,11 @@ class Reprodutor(object):
 
     def le(self):
         """
-        Reads the file in OS and mounts the Playlist 
+        Reads the file in OS and mounts the Playlist
         """
         path = askopenfilename(initialdir="\\usr",
                            filetypes =(("Arquivos de Texto", "*.txt"),("All Files","*.*")),
                            title = "Carregar a Playlist")
-        
         arquivo = open (path, "r", encoding="UTF-8")
         for l in arquivo.readlines():
             musicaS = Musica()
@@ -221,10 +219,10 @@ class Reprodutor(object):
         Plays the foward song
         """
         for item in range(len(musicas)):
-            item -= 1 
+            item -= 1
             musica_atual = mixer.music.load(musicas[item])
             musica_atual = mixer.music.play()
-            
+
     def valida_faixa_inteiro(pergunta, inicio, fim):
         """
         Validates the entries in Program
@@ -236,7 +234,6 @@ class Reprodutor(object):
                     return(valor)
             except ValueError:
                 print("Valor inválido, favor digitar entre %d e %d" % (inicio, fim))
-               
 
     def imprime_menu():
         """
@@ -257,36 +254,36 @@ class Reprodutor(object):
    0 - Sai
     """)
         return Reprodutor.valida_faixa_inteiro("Escolha uma opção: ",0,10)
-    
+
     def menu(self):
         """
         Executes the entries in loop until the User asks to exit
         """
         while True:
-         opção = Reprodutor.imprime_menu()
-         if opção == 0:
+         opcao = Reprodutor.imprime_menu()
+         if opcao == 0:
              break
-         elif opção == 1:
+         elif opcao == 1:
              Reprodutor.nova(self)
-         elif opção == 2:
+         elif opcao == 2:
              Reprodutor.reproduz(self)
-         elif opção == 3:
+         elif opcao == 3:
              Reprodutor.pausa(self)
-         elif opção == 4:
+         elif opcao == 4:
              Reprodutor.para(self)
-         elif opção == 5:
+         elif opcao == 5:
              Reprodutor.retoma(self)
-         elif opção == 6:
+         elif opcao == 6:
              Reprodutor.proxima(self)
-         elif opção == 7:
+         elif opcao == 7:
              Reprodutor.anterior(self)
-         elif opção == 8:
+         elif opcao == 8:
              Reprodutor.grava(self)
-         elif opção == 9:
+         elif opcao == 9:
              Reprodutor.le(self)
-         elif opção == 10:
+         elif opcao == 10:
              Reprodutor.pesquisa(self)
-        
+
 #intancia a Classe Reprodutor
 player = Reprodutor()
 #executa a funcao menu
