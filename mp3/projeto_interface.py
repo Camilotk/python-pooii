@@ -1,4 +1,6 @@
 from tkinter import *
+from tkinter import ttk
+
 #Button
 #Progressbar -> fim da música
 #Scale -> volume
@@ -51,8 +53,17 @@ class Interface(object):
         btnStop = Button(janela, width=5, text="Stop")
         btnStop.place(x=75, y=60)
         # -------------------------
+        tree = ttk.Treeview(janela, columns=('Album', 'Artista'))
+        tree.heading('#0', text='Nome')
+        tree.heading('#1', text='Album')
+        tree.heading('#2', text='Artista')
+        tree.column('#1', stretch=YES)
+        tree.column('#2', stretch=YES)
+        tree.column('#0', stretch=YES)
+        tree.place(x=5, y=100)
+        tree.insert('', 'end', text="Música 1", values=("Dua Lipa", "Europa"))
         janela.configure(menu=menubar)
-        janela.geometry("450x350")
+        janela.geometry("612x325")
         janela.mainloop()
 
 r = Interface()

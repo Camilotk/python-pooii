@@ -95,7 +95,6 @@ class Musica(object):
         with open(caminho, "rb") as binary_file:
             """
             Reads the file in binary data and returns it's metadata
-
             variables:
             _a = readed bits
             resto = cleaned bits
@@ -250,7 +249,6 @@ class Reprodutor(object):
    8 - Salvar a Playlist
    9 - Le a Playlist
    10 - Pesquisa
-
    0 - Sai
     """)
         return Reprodutor.valida_faixa_inteiro("Escolha uma opção: ",0,10)
