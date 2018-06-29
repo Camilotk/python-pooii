@@ -318,6 +318,9 @@ class Interface(object):
             self.tree.insert('', 'end', text=musica.nome, values=(musica.album, musica.artista))
 
     def licenca(self):
+        """
+        Displays the Apache 2.0 licence
+        """
         lic = """
         Copyright 2018 Camilo Cunha de Azevedo
 
@@ -341,6 +344,9 @@ class Interface(object):
         janela4.mainloop()
 
     def sobre(self):
+        """
+        Shows information about the college project
+        """
         s = "IFRS \n Aluno: Camilo Cunha de Azevedo \n Disciplina: POO II \n Prof: Jean da Rolt \n Semestre: 2018/01"
         janela5 = Tk()
         janela5.title("Trabalho da Faculdade")
