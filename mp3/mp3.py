@@ -32,9 +32,6 @@ from tkinter.filedialog import askopenfilename
 from tkinter import *
 from tkinter import ttk
 
-def donothing():
-    pass
-
 class Musica(object):
     def __init__(self):
         """
