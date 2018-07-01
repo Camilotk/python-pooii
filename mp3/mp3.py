@@ -1,7 +1,7 @@
 #!/home/cazevedo/.pypy/bin/pypy3
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2018 Camilo Cunha <Camilotk@gmail.com> e Renan <:email>
+# Copyright (C) 2018 Camilo Cunha <Camilotk@gmail.com> e Renan <Renan.sebben@hotmail.com>
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -322,7 +322,7 @@ class Interface(object):
         Displays the Apache 2.0 licence
         """
         lic = """
-        Copyright 2018 Camilo Cunha de Azevedo
+        Copyright 2018 Camilo Cunha de Azevedo e Renan Sebben
 
         Licensed under the Apache License, Version 2.0 (the "License");
         you may not use this file except in compliance with the License.
@@ -347,7 +347,7 @@ class Interface(object):
         """
         Shows information about the college project
         """
-        s = "IFRS \n Aluno: Camilo Cunha de Azevedo \n Disciplina: POO II \n Prof: Jean da Rolt \n Semestre: 2018/01"
+        s = "IFRS \n Alunos: Camilo C. de Azevedo e Renan Sebben \n Disciplina: POO II \n Prof: Jean da Rolt \n Semestre: 2018/01"
         janela5 = Tk()
         janela5.title("Trabalho da Faculdade")
         L7 = Label(janela5, text=s)
